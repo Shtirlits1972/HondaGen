@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>home</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+</head>
+<body>
+    <h2>HondaGen</h2>
+
+    <table class="table table-light table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>
+                    №
+                </th>
+                <th>
+                    Ccылки
+                </th>
+                <th>
+                    Примечания
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr>
+                <td>1</td>
+                <td>
+                    <a href="/vehicle/vin?vin=1HGCE17600A300001">/vehicle/vin?vin=1HGCE17600A300001</a>
+                </td>
+                <td>    Получение списка автомобилей по VIN  </td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>
+                    <a href="/image?image_id=java1.png">/image?image_id=java1.png</a>
+                </td>
+                <td>
+                    Получение картинки
+                </td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>
+                    <a href="/models">/models</a>
+                </td>
+                <td>
+                    Список моделей
+                </td>
+            </tr>
+
+            <tr>
+                <td>4</td>
+                <td>
+                    <a href="/mgroups?vehicle_id=8030">/mgroups?vehicle_id=8030</a>
+                </td>
+                <td>
+                    Получение груп запчастей по авто
+                </td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>
+                    <a href="/vehicle?nplblk=B__1300&hmodtyp=1667&npl=18TSAG01">/vehicle?nplblk=B__1300&hmodtyp=1667&npl=18TSAG01</a>
+                </td>
+                <td>
+                    Список деталей в группе
+                </td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>
+                    <a href="/vehicle/sgroups?hmodtyp=4708&nplgrp=2&npl=19SELKD1">/vehicle/sgroups?hmodtyp=4708&nplgrp=2&npl=19SELKD1</a>
+                </td>
+                <td>
+                    Получение подгруп запчастей по авто  <br />
+                    без параметра npl (каталог разборки) выполняется долго и много одинаковых значений!!! <br />
+                    Id = (pbldst.npl, '_', pblokt.nplblk)
+                </td>
+            </tr>
+
+            <tr>
+                <td>7</td>
+                <td>
+                    <a href="/ﬁlters?modelId=ACCORD AERODECK_1996_5_US">/ﬁlters?modelId=ACCORD AERODECK_1996_5_US</a>
+                </td>
+                <td>
+                    Список фильтров
+                </td>
+            </tr>
+
+            <tr>
+                <td>8</td>
+                <td>
+                    <a href="/ﬁlter-cars?modelId=ACCORD AERODECK_1996_5_US&param=4AT&param=KE&param=F22B5&page=1&page_size=10">
+                        /ﬁlter-cars?modelId=ACCORD AERODECK_1996_5_US&param=4AT&param=KE&param=F22B5&page=1&page_size=10
+                    </a>
+                </td>
+                <td>
+                    Список авто, которые соответствуют выбранным фильтрам
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+</body>
+</html>
