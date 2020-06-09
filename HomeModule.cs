@@ -147,6 +147,39 @@ namespace HondaGen
 				return json;
 			});
 
+			Get("/locales", args => {
+
+				List<lang> list = ClassCrud.GetLang();
+				return JsonConvert.SerializeObject(list);
+			});
+
+			Get("/vehicle/wmi", args => {
+
+				List<string> list = ClassCrud.GetWmi();
+				return JsonConvert.SerializeObject(list);
+			});
+
+			Get("/vehicleAttr", args => {
+
+				string vehicle_id = Request.Query["vehicle_id"];
+
+				VehiclePropArr result = ClassCrud.GetVehiclePropArr(vehicle_id);
+				return JsonConvert.SerializeObject(result);
+			});
+
+			Post("/vehicle/sgroups", args => {
+
+				string strCodes = Request.Query["codes"];
+				string strNodeIds = Request.Query["node_ids"];
+
+
+
+				string[] codes = strCodes.Split(",");
+				string[] node_ids = strNodeIds.Split(",");
+
+				List<node> list = ClassCrud.GetNodes(codes, node_ids);
+				return JsonConvert.SerializeObject(list);
+			});
 		}
 	}
 }

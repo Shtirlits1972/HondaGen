@@ -49,7 +49,6 @@
 
   <ItemGroup>
     <Folder Include="image\" />
-    <Folder Include="Models\Dto\" />
   </ItemGroup>
 
 </Project>

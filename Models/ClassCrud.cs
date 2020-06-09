@@ -483,6 +483,204 @@ namespace HondaGen.Models
             }
             return list;
         }
+        public static List<lang> GetLang()
+        {
+            List<lang> list = new List<lang>();
+            string strCommand = " SELECT DISTINCT " +
+                                "   id code, " +
+                                "   name, " +
+                                "   CASE " +
+                                "     WHEN help_set = 'Y' THEN TRUE " +
+                                "     WHEN help_set = 'N' THEN FALSE " +
+                                "     ELSE NULL " +
+                                " END is_default " +
+                                " FROM pl_language_tbl; ";
+
+            try
+            {
+                using (IDbConnection db = new MySqlConnection(strConn))
+                {
+                    list = db.Query<lang>(strCommand).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                string Error = ex.Message;
+                int o = 0;
+            }
+            return list;
+        }
+        public static List<string> GetWmi()
+        {
+            List<string> list = new List<string>();
+            string strCommand = " SELECT value FROM wmi; ";
+
+            try
+            {
+                using (IDbConnection db = new MySqlConnection(strConn))
+                {
+                    list = db.Query<string>(strCommand).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                string Error = ex.Message;
+                int o = 0;
+            }
+            return list;
+        }
+        public static List<attributes> GetAttributes()
+        {
+            List<attributes> list = new List<attributes>();
+
+            attributes cmodnamepc = new attributes { code = "cmodnamepc", name = "Модель", value = "" };
+            list.Add(cmodnamepc);
+
+            attributes xcardrs = new attributes { code = "xcardrs", name = "Кол-во дверей", value = "" };
+            list.Add(xcardrs);
+
+            attributes dmodyr = new attributes { code = "dmodyr", name = "Год выпуска", value = "" };
+            list.Add(dmodyr);
+
+            attributes xgradefulnam = new attributes { code = "xgradefulnam", name = "Класс", value = "" };
+            list.Add(xgradefulnam);
+
+            attributes ctrsmtyp = new attributes { code = "ctrsmtyp", name = "Тип трансмиссии", value = "" };
+            list.Add(ctrsmtyp);
+
+            attributes cmftrepc = new attributes { code = "cmftrepc", name = "Страна производитель", value = "" };
+            list.Add(cmftrepc);
+
+            attributes engine = new attributes { code = "carea", name = "Страна рынок", value = "" };
+            list.Add(engine);
+
+            return list;
+        }
+        public static VehiclePropArr GetVehiclePropArr(string vehicle_id)
+        {
+            VehiclePropArr model = null;
+
+            //int hmodtyp = 0;
+            //int.TryParse(vehicle_id, out hmodtyp);
+
+            try
+            {
+
+                #region strCommand
+                string strCommand = " SELECT  " +
+                                    " pmotyt.hmodtyp, " +
+                                    " pmotyt.cmodnamepc,  " +
+                                    " pmotyt.xcardrs, " +
+                                    " pmotyt.dmodyr, " +
+                                    " pmotyt.xgradefulnam,  " +
+                                    " pmotyt.ctrsmtyp,  " +
+                                    " pmotyt.cmftrepc,  " +
+                                    " pmotyt.carea " +
+
+                                    " FROM pl_pmotyt pmotyt " +
+                                    " WHERE pmotyt.hmodtyp = @vehicle_id; ";
+                #endregion
+
+                using (IDbConnection db = new MySqlConnection(strConn))
+                {
+                    CarTypeInfo carType = db.Query<CarTypeInfo>(strCommand, new { vehicle_id }).FirstOrDefault();
+
+                    List<attributes> list = GetAttributes();
+
+                    list[0].value = carType.cmodnamepc;
+                    list[1].value = carType.xcardrs;
+                    list[2].value = carType.dmodyr;
+                    list[3].value = carType.xgradefulnam;
+                    list[4].value = carType.ctrsmtyp;
+                    list[5].value = carType.cmftrepc;
+                    list[6].value = carType.carea;
+
+                    model = new VehiclePropArr { model_name = carType.cmodnamepc };
+                    model.attributes = list;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                string Errror = ex.Message;
+                int y = 0;
+            }
+
+            return model;
+        }
+        public static List<node> GetNodes(string[] codesArr = null, string[] node_idsArr = null)
+        {
+            List<node> list = new List<node>();
+            string codes = null;
+            string node_ids = null;
+
+            if (codesArr != null && codesArr.Length > 0)
+            {
+                codes = string.Empty;
+
+                for (int i = 0; i < codesArr.Length; i++)
+                {
+                    if (i == 0)
+                    {
+                        codes += codesArr[i];
+                    }
+                    else
+                    {
+                        codes += "," + codesArr[i];
+                    }
+
+                }
+            }
+            if (node_idsArr != null && node_idsArr.Length > 0)
+            {
+                node_ids = string.Empty;
+
+                for (int i = 0; i < node_idsArr.Length; i++)
+                {
+                    if (i == 0)
+                    {
+                        node_ids += node_idsArr[i];
+                    }
+                    else
+                    {
+                        node_ids += "," + node_idsArr[i];
+                    }
+                }
+            }
+
+            string strCommand = " SELECT nt.code, nt.group name, nt.node_ids FROM " +
+                                " nodes_tb nt ";
+
+            if (!String.IsNullOrEmpty(codes) || !String.IsNullOrEmpty(node_ids))
+            {
+                strCommand += " WHERE";
+            }
+            if (!String.IsNullOrEmpty(codes))
+            {
+                strCommand += $"  nt.code IN  ({codes}) ";
+            }
+            if (!String.IsNullOrEmpty(codes) && !String.IsNullOrEmpty(node_ids))
+            {
+                strCommand += " OR ";
+            }
+            if (!String.IsNullOrEmpty(node_ids))
+            {
+                strCommand += $"  nt.node_ids IN  ({node_ids}) ";
+            }
+            try
+            {
+                using (IDbConnection db = new MySqlConnection(strConn))
+                {
+                    list = db.Query<node>(strCommand).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                string Error = ex.Message;
+                int o = 0;
+            }
+            return list;
+        }
 
     }
 }
