@@ -58,34 +58,33 @@ namespace HondaGen
 				{
 					headers = headerList,
 					items = list,
-					cntitems = list.Count,
+					cnt_items = list.Count,
 					page = 1
 				};
 
-				string json = JsonConvert.SerializeObject(result);
-
-				return json;
+				return JsonConvert.SerializeObject(result);
 			});
 
 			Get("/mgroups", args => {
 
                 string vehicle_id = Request.Query["vehicle_id"];
-                List<PartsGroup> list = ClassCrud.GetPartsGroup(vehicle_id);
+				string lang = Request.Query["lang"];
 
-                string json = JsonConvert.SerializeObject(list);
-                return json;
+				List<PartsGroup> list = ClassCrud.GetPartsGroup(vehicle_id, lang);
+
+				return JsonConvert.SerializeObject(list);
             });
 			//=========================================================================================
 			Get("/vehicle", args => {
 
-				string nplblk = Request.Query["nplblk"];
-				int hmodtyp = Request.Query["hmodtyp"];
-				string npl = Request.Query["npl"];
+				string node_id = Request.Query["node_id"];
+				string lang = Request.Query["lang"];
 
-				List<SpareParts4F> list = ClassCrud.GetSpareParts(nplblk, hmodtyp, npl);
+				//List<SpareParts4F> list = ClassCrud.GetSpareParts(nplblk, hmodtyp, npl);
+				DetailsInNode details = ClassCrud.GetDetailsInNode(node_id, lang );
 
-                string json = JsonConvert.SerializeObject(list);
-                return json;
+				return JsonConvert.SerializeObject(details);
+                
             });
 			//=========================================================================================
 			Get("/ﬁlters", args => {
@@ -131,21 +130,14 @@ namespace HondaGen
 
 			Get("/vehicle/sgroups", args => {
 
-				int hmodtyp = Request.Query["hmodtyp"];
-				string nplgrp = Request.Query["nplgrp"];
+				string vehicle_id = Request.Query["vehicle_id"];
+				string group_id = Request.Query["group_id"];
+				string lang = Request.Query["lang"];
 
-				string npl = "";
+                List<Sgroups> list = ClassCrud.GetSgroups(vehicle_id, group_id, lang);
+                return JsonConvert.SerializeObject(list);
 
-				if(Request.Query["npl"] != null)
-                {
-					npl = Request.Query["npl"];
-				}
-
-				List<Sgroups> list = ClassCrud.GetSgroups(hmodtyp, nplgrp, npl);
-
-				string json = JsonConvert.SerializeObject(list);
-				return json;
-			});
+            });
 
 			Get("/locales", args => {
 

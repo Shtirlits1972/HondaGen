@@ -5,13 +5,15 @@ using System.Threading.Tasks;
 
 namespace HondaGen.Models.Dto
 {
-    public class Sgroups
+    public class DetailsInNode
     {
+        // список деталей в узле
         public string node_id { get; set; }
         public string name { get; set; }
-        public string image_id { get; set; }
-        public string image_ext { get; set; }
+        public List<Detail> parts { get; set; }
+        public List<images> images { get; set; }
         public List<attributes> attributes { get; set; }
+
         public override string ToString()
         {
             return name;

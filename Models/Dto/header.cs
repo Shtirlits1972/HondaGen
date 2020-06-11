@@ -7,7 +7,7 @@ namespace HondaGen.Models.Dto
 {
     public class header
     {
-        public string fid { get; set; }
+        public string code { get; set; }
         public string title { get; set; }
     }
 }
